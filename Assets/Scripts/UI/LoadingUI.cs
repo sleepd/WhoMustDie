@@ -8,7 +8,6 @@ public class LoadingUI : MonoBehaviour
     [SerializeField] Image loadingImage;
 
     private float timer = 0f;
-    float loadingImageRotationSpeed = 90f; // degrees per second
 
     void Update()
     {

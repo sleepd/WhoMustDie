@@ -13,7 +13,7 @@ public class GameManager : Singleton<GameManager>
         base.Awake();
 
         StateMachine = new GameManagerStateMachine();
-        loadingUI = FindObjectOfType<LoadingUI>().gameObject;
+        loadingUI = FindFirstObjectByType<LoadingUI>().gameObject;
 
     }
 
