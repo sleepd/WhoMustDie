@@ -1,0 +1,20 @@
+<ui:UXML xmlns:ui="UnityEngine.UIElements" xmlns:uie="UnityEditor.UIElements" editor-extension-mode="False">
+    <Style src="project://database/Assets/UI/GameHUD.uss?fileID=7433441132597879392&amp;guid=f2d0806f22610464e9e3f858d2455fe5&amp;type=3#GameHUD" />
+    <ui:VisualElement name="Crosshair_box" picking-mode="Ignore" style="height: 100%; width: 100%; justify-content: center; align-self: flex-start; align-content: flex-start; align-items: center; position: absolute;">
+        <ui:VisualElement name="Crosshair_Dot" picking-mode="Ignore" style="width: 8px; height: 8px; background-image: url(&quot;project://database/Assets/UI/Textures/CrossHair_Dot.png?fileID=2800000&amp;guid=43ace16bca4ff834893334de25cc5b17&amp;type=3#CrossHair_Dot&quot;); -unity-background-image-tint-color: rgba(212, 212, 212, 0.5);" />
+        <ui:VisualElement name="Crosshair" picking-mode="Ignore" class="hide" style="width: 96px; height: 96px; background-image: url(&quot;project://database/Assets/UI/Textures/CrossHair.png?fileID=2800000&amp;guid=0f2f9d5ce1811494498f103a32001881&amp;type=3#CrossHair&quot;); -unity-background-image-tint-color: rgba(0, 239, 32, 0.5);" />
+    </ui:VisualElement>
+    <ui:VisualElement name="UI_Box" picking-mode="Ignore" style="position: absolute; width: 100%; height: 100%; justify-content: space-between;">
+        <ui:VisualElement name="Top" picking-mode="Ignore" style="flex-grow: 1; align-items: flex-start; flex-direction: row; justify-content: space-between; align-self: auto; align-content: stretch; top: 10px;">
+            <ui:VisualElement picking-mode="Ignore" style="flex-grow: 1; align-self: auto;">
+                <ui:Label text="Reactor Health" name="ReactorHealth" picking-mode="Ignore" class="text" style="align-items: auto; align-content: auto; left: 30px;" />
+            </ui:VisualElement>
+            <ui:VisualElement name="VisualElement" picking-mode="Ignore" style="flex-grow: 1; align-self: auto; align-items: center;">
+                <ui:Label text="Time Remaining:" name="RemainingTime" picking-mode="Ignore" class="text" style="align-items: auto; align-content: auto; align-self: flex-end; right: 30px;" />
+            </ui:VisualElement>
+        </ui:VisualElement>
+        <ui:VisualElement name="Buttom" picking-mode="Ignore" style="flex-grow: 1; flex-direction: column-reverse; align-items: flex-end;">
+            <ui:Label text="0/100" name="Ammo" picking-mode="Ignore" class="text" style="right: 30px; bottom: 30px;" />
+        </ui:VisualElement>
+    </ui:VisualElement>
+</ui:UXML>

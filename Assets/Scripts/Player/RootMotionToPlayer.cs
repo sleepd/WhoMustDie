@@ -2,16 +2,18 @@ using UnityEngine;
 
 public class RootMotionToPlayer : MonoBehaviour
 {
-    PlayerController playerController;
+    IRootMotionParent rootMotionParent;
+    Animator animator;
 
     void Awake()
     {
-        playerController = transform.parent.GetComponent<PlayerController>();
+        rootMotionParent = transform.parent.GetComponent<IRootMotionParent>();
+        animator = GetComponent<Animator>();
     }
 
     void OnAnimatorMove()
     {
-        Vector3 delta = playerController.animator.deltaPosition;
-        playerController.UpdateRootMotionDelta(delta);
+        Vector3 delta = animator.deltaPosition;
+        rootMotionParent.UpdateRootMotionDelta(delta);
     }
 }

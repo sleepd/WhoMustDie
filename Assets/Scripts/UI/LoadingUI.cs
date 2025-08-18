@@ -11,7 +11,7 @@ public class LoadingUI : MonoBehaviour
 
     void Update()
     {
-        timer += Time.deltaTime;
+        timer += Time.unscaledDeltaTime;
         if (timer >= interval)
         {
             loadingImage.transform.Rotate(0f, 0f, anglePerStep);

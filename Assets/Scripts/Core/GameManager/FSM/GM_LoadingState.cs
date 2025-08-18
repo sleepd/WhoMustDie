@@ -14,8 +14,11 @@ public class LoadingState : IState
     }
     public void Enter()
     {
+        Time.timeScale = 1f;
+        SceneLoader.Instance.OnLoadingFinished += OnLoadingDone;
         SceneLoader.Instance.LoadScene(sceneName);
         GameManager.Instance.loadingUI.SetActive(true);
+        GameManager.Instance.loadingCamera.SetActive(true);
     }
 
     public void Exit()
@@ -25,14 +28,17 @@ public class LoadingState : IState
 
     public void Update()
     {
-        if (SceneLoader.Instance.op.progress >= 0.9f)
-        {
-            SceneLoader.Instance.op.allowSceneActivation = true;
-            GameManager.Instance.StateMachine.ChangeState(nextState);
-        }
+
     }
     public void PhysicsUpdate()
     {
 
+    }
+
+    void OnLoadingDone()
+    {
+        SceneLoader.Instance.OnLoadingFinished -= OnLoadingDone;
+        GameManager.Instance.loadingCamera.SetActive(false);
+        GameManager.Instance.StateMachine.ChangeState(nextState);
     }
 }

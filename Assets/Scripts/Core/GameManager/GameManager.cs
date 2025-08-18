@@ -1,4 +1,5 @@
 using System.Collections;
+using UnityEditor;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 
@@ -7,6 +8,7 @@ public class GameManager : Singleton<GameManager>
     public GameManagerStateMachine StateMachine { get; private set; }
     public GameObject loadingUI { get; private set; }
     public Player player { get; private set; }
+    public GameObject loadingCamera;
 
     public override void Awake()
     {
@@ -19,8 +21,7 @@ public class GameManager : Singleton<GameManager>
 
     private void Start()
     {
-        StateMachine.loadingState.SetSceneNameToLoad("MainMenu", StateMachine.mainmenuState);
-        StateMachine.ChangeState(StateMachine.loadingState);
+        ToMainmenu();
     }
 
     private void Update()
@@ -28,10 +29,24 @@ public class GameManager : Singleton<GameManager>
         StateMachine.Update();
     }
 
-    private void FixedUpdate()
+    public void StartGame()
     {
-        StateMachine.PhysicsUpdate();
+        StateMachine.loadingState.SetSceneNameToLoad("Level01", StateMachine.playingState);
+        StateMachine.ChangeState(StateMachine.loadingState);
     }
 
-    
+    public void ToMainmenu()
+    {
+        StateMachine.loadingState.SetSceneNameToLoad("MainMenu", StateMachine.mainmenuState);
+        StateMachine.ChangeState(StateMachine.loadingState);
+    }
+
+    public static void Quit()
+    {
+#if UNITY_EDITOR
+        EditorApplication.isPlaying = false;
+#else
+        Application.Quit();
+#endif
+    }
 }

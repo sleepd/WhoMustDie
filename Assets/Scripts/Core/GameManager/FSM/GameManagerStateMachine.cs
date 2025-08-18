@@ -1,6 +1,7 @@
 public class GameManagerStateMachine : StateMachine
 {
-    public LoadingState loadingState = new LoadingState();
-    public MainmenuState mainmenuState = new MainmenuState();
+    public LoadingState loadingState = new();
+    public MainmenuState mainmenuState = new();
+    public PlayingState playingState = new();
 
 }

@@ -12,29 +12,41 @@ public class PlayerAimingState : PlayerFightingState
     public override void Enter()
     {
         base.Enter();
-        player.input.Player.Aim.canceled += StopAim;
+        player.input.Player.Reload.performed += Reload;
+        player.input.Player.Attack.started += Fire;
+
+        player.gameHUD.ShowCrosshair();
+        player.ActiveAimingCamera();
+        player.animator.SetBool("Aiming", true);
     }
 
-    private void StopAim(InputAction.CallbackContext context)
-    {
-        stateMachine.ChangeState(stateMachine.weaponIdleState);
-    }
+
 
     public override void Exit()
     {
         base.Exit();
-        player.input.Player.Aim.canceled -= StopAim;
+        player.input.Player.Reload.performed -= Reload;
     }
 
     public override void Update()
     {
         base.Update();
-        float currentWeight = player.animator.GetLayerWeight(1);
-        if (currentWeight < 1)
+        // float currentWeight = player.animator.GetLayerWeight(1);
+        // if (currentWeight < 1)
+        // {
+        //     float newWeight = Mathf.Lerp(currentWeight, 1, Time.deltaTime * blendSpeed);
+        //     player.animator.SetLayerWeight(1, newWeight);
+        // }
+        player.AlignToCameraY();
+
+        if (!player.input.Player.Aim.IsInProgress())
         {
-            float newWeight = Mathf.Lerp(currentWeight, 1, Time.deltaTime * blendSpeed);
-            player.animator.SetLayerWeight(1, newWeight);
+            stateMachine.ChangeState(stateMachine.weaponIdleState);
         }
-        
+    }
+
+    void Fire(InputAction.CallbackContext context)
+    {
+        stateMachine.ChangeState(stateMachine.fireState);
     }
 }

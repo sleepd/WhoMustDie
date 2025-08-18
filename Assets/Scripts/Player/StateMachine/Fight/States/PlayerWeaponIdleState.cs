@@ -12,7 +12,10 @@ public class PlayerWeaponIdleState : PlayerFightingState
     {
         base.Enter();
         player.input.Player.Aim.started += Aim;
-        // player.SwitchCamera();
+        player.input.Player.Reload.performed += Reload;
+        player.gameHUD.ShowDotCrosshair();
+        player.ActiveOrbitalCamera();
+        player.animator.SetBool("Aiming", false);
     }
 
     private void Aim(InputAction.CallbackContext context)
@@ -35,18 +38,19 @@ public class PlayerWeaponIdleState : PlayerFightingState
         base.Update();
         player.RotateToInputDirection();
 
-        float currentWeight = player.animator.GetLayerWeight(1);
-        if (currentWeight > 0)
-        {
-            float newWeight = Mathf.Lerp(currentWeight, 0, Time.deltaTime * blendSpeed);
-            if (currentWeight < 0.01f) currentWeight = 0;
-            player.animator.SetLayerWeight(1, newWeight);
-        }
+        // float currentWeight = player.animator.GetLayerWeight(1);
+        // if (currentWeight > 0)
+        // {
+        //     float newWeight = Mathf.Lerp(currentWeight, 0, Time.deltaTime * blendSpeed);
+        //     if (currentWeight < 0.01f) currentWeight = 0;
+        //     player.animator.SetLayerWeight(1, newWeight);
+        // }
     }
 
     public override void Exit()
     {
         base.Exit();
         player.input.Player.Aim.started -= Aim;
+        player.input.Player.Reload.performed -= Reload;
     }
 }

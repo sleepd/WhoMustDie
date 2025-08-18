@@ -1,0 +1,32 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 06f2b0ee602bf0648ace755e2befbde4, type: 3}
+  m_Name: MA5C
+  m_EditorClassIdentifier: 
+  weaponName: MA5C
+  icon: {fileID: 0}
+  prefab: {fileID: 0}
+  weaponType: 1
+  damage: 10
+  fireRate: 0.15
+  range: 50
+  magazineSize: 100
+  reloadTime: 2
+  recoil: 1
+  accuracy: 0.9
+  fireSound: {fileID: 8300000, guid: 22ef8b5aca90c0f4bab1943225786c43, type: 3}
+  reloadSound: {fileID: 8300000, guid: c9ae015801d0afb44bf60fdbf47db16d, type: 3}
+  muzzleFlashVFX: {fileID: 0}
+  hitEffectVFX: {fileID: 6211084838228628372, guid: 4a7bb5320d401ff4f85709d9ee26acff, type: 3}
+  bloodVFX: {fileID: 6987688159210767250, guid: 753ee021a786b814abedf45ec3440acc, type: 3}
+  fireAnimTrigger: Fire
+  reloadAnimTrigger: Reload

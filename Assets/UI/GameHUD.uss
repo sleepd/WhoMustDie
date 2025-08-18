@@ -1,0 +1,35 @@
+:root {
+}
+
+.hide {
+    visibility: visible;
+    display: none;
+}
+
+.text {
+    font-size: 38px;
+    -unity-font-style: bold;
+}
+
+.my_btn {
+    font-size: 58px;
+    background-color: rgb(188, 188, 188);
+    -unity-font-style: bold;
+    color: rgb(255, 255, 255);
+    width: 30%;
+    align-self: center;
+    visibility: visible;
+    display: flex;
+    border-top-width: 0;
+    border-right-width: 0;
+    border-bottom-width: 0;
+    border-left-width: 0;
+    border-top-left-radius: 0;
+    border-top-right-radius: 0;
+    border-bottom-right-radius: 0;
+    border-bottom-left-radius: 0;
+}
+
+.my_btn:hover {
+    background-color: rgb(255, 137, 0);
+}

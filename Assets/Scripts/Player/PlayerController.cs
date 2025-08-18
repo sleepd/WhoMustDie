@@ -1,16 +1,24 @@
+using System;
 using Unity.Cinemachine;
 using UnityEngine;
 
-public class PlayerController : MonoBehaviour
+public class PlayerController : MonoBehaviour, IRootMotionParent
 {
     public MovementStateMachine movementStateMachine { get; private set; }
     public FightStateMachine fightStateMachine { get; private set; }
     public Animator animator { get; private set; }
+    public GameHUD gameHUD { get; private set; }
     private CharacterController characterController;
     public InputSystem_Actions input { get; private set; }
     public CinemachineCamera orbitalCamera { get; private set; }
     public CinemachineCamera aimingCamera { get; private set; }
-    private CinemachineCamera currentCamera;
+    public CinemachineCamera currentCamera { get; private set; }
+    public Camera mainCamera { get; private set; }
+    public AudioSource audioSource { get; private set; }
+    [field: SerializeField] public Weapon weapon { get; private set; } // TODO: add a func to equip weapon
+
+    public event Action<int, int> OnAmmoChanged;
+
 
     [SerializeField] float rotationSpeed = 90f;
 
@@ -28,15 +36,16 @@ public class PlayerController : MonoBehaviour
         fightStateMachine = new(this);
         characterController = GetComponent<CharacterController>();
         orbitalCamera = GameObject.Find("OrbitalCamera").GetComponent<CinemachineCamera>();
-        // aimingCamera = GameObject.Find("AimCamera").GetComponent<CinemachineCamera>();
+        aimingCamera = GameObject.Find("AimCamera").GetComponent<CinemachineCamera>();
         currentCamera = orbitalCamera;
+
+        gameHUD = GameObject.Find("GameHUD").GetComponent<GameHUD>();
 
 
         Transform child = transform.Find("Vanguard_mesh");
         if (child != null)
         {
             animator = child.GetComponent<Animator>();
-            // animator.applyRootMotion = false;
         }
 
         input = new();
@@ -44,6 +53,11 @@ public class PlayerController : MonoBehaviour
 
         movementStateMachine.ChangeState(movementStateMachine.playerIdleState);
         fightStateMachine.ChangeState(fightStateMachine.weaponIdleState);
+
+        weapon.OnFired += OnWeaponFire;
+        weapon.OnAmmoChanged += UpdateAmmoEvent;
+        mainCamera = Camera.main;
+        audioSource = GetComponent<AudioSource>();
     }
 
     void Update()
@@ -79,7 +93,7 @@ public class PlayerController : MonoBehaviour
     {
         rootMotionDelta = delta;
     }
-    
+
     public void RotateToDirection(Vector3 worldDirection)
     {
         if (worldDirection != Vector3.zero)
@@ -110,16 +124,46 @@ public class PlayerController : MonoBehaviour
         return camForward * moveInput.y + camRight * moveInput.x;
     }
 
-    public void SwitchCamera()
+    public void ActiveAimingCamera()
     {
-        currentCamera = (currentCamera == orbitalCamera) ? aimingCamera : orbitalCamera;
-        SetActiveCamera(currentCamera);
+        SetActiveCamera(aimingCamera);
+    }
+
+    public void ActiveOrbitalCamera()
+    {
+        SetActiveCamera(orbitalCamera);
     }
 
     private void SetActiveCamera(CinemachineCamera cam)
     {
         orbitalCamera.Priority = (cam == orbitalCamera) ? 10 : 0;
         aimingCamera.Priority = (cam == aimingCamera) ? 10 : 0;
+        currentCamera = cam;
+    }
+
+    public void AlignToCameraY()
+    {
+        Vector3 forward = currentCamera.transform.forward;
+        forward.y = 0f;
+        if (forward.sqrMagnitude > 0.001f)
+        {
+            RotateToDirection(forward);
+        }
+    }
+
+    public void FireWeapon()
+    {
+        weapon.Fire();
+    }
+
+    void OnWeaponFire()
+    {
+        
+    }
+
+    void UpdateAmmoEvent()
+    {
+        OnAmmoChanged?.Invoke(weapon.CurrentAmmo, weapon.Settings.magazineSize);
     }
 
 }
